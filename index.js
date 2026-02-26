@@ -80,32 +80,29 @@ const students = [
 app.get("/", (req, res) => {
   res.send("Express server is running");
 });
-// first route
 app.get("/students", (req, res) => {
   res.send(students);
 });
 
-// second route
 app.get("/students/average", (req, res) => {
   const totalCgpa = students.reduce((sum, student) => sum + student.cgpa, 0);
+  // console.log(totalCgpa);
   const averageCgpa = totalCgpa / students.length;
   res.send({ averageCgpa });
 });
 
-// third route
 app.get("/students/count", (req, res) => {  
   res.send({ count: students.length });
 });
 
-// fourth route
 app.get("/students/topper", (req, res) => {
   const toppr = students.reduce((top, student) => {
+    console.log(student.cgpa, top.cgpa);
     return student.cgpa > top.cgpa ? student : top;
   }, students[0]);
   res.send(toppr);
 });
 
-// fifth route
 app.get("/students/branch/:branch", (req, res) => {
   const branch = req.params.branch.toLowerCase();
 
@@ -116,9 +113,9 @@ app.get("/students/branch/:branch", (req, res) => {
   res.send(studentsInBranch);
 });
 
-// sixth route
+
 app.get("/students/:id", (req, res) => {
-  const id = parseInt(req.params.id);  // convert to number
+  const id = parseInt(req.params.id); 
   const student = students.find(student => student.id === id);
 
   if (student) {
